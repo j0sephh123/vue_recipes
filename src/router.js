@@ -39,7 +39,7 @@ export default new Router({
     {
       path: '/recipes',
       name: 'recipes',
-      component: () => import('./components/Recipes'),
+      component: () => import('./components/RecipesContainter'),
       // beforeEnter(to, from, next) {
       //   if(store.getters.isAuthenticated){
       //     next()

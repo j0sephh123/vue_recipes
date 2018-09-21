@@ -1,12 +1,9 @@
 <template>
   <div>
-
     <b-pagination
       :total-rows="count"
       :per-page="limit"
       v-model="currentPage" />
-
-    <div>currentPage: {{currentPage}}</div>
   </div>
 </template>
 

@@ -31,9 +31,7 @@ const recipes = {
       state.count = count;
     },
     changePage(state, {page}) {
-      console.log(state.filter.start);
       state.filter.start = +page - 1;
-      console.log(state.filter.start);
     }
   },
   actions: {

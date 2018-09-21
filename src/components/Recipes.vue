@@ -1,6 +1,4 @@
 <template>
-<div class="container">
-  <span>Recipes count {{count}}</span>
 <div class="row">
 
   <div v-for="recipe in recipes" :key="recipe._id" 
@@ -31,19 +29,15 @@
   </div>
 
 </div>
-<pagination></pagination>
-</div>
 </template>
 
 <script>
 import {mapActions, mapGetters} from 'vuex';
 import commentModal from '@/modals/commentModal';
-import Pagination from '@/components/Pagination'
 
 export default {
   components: {
     commentModal: commentModal,
-    pagination: Pagination
   },
   data() {
     return {
