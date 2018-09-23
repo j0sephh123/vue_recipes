@@ -10,8 +10,9 @@
         <div class="d-flex justify-content-between">
           <span class="h5">Recipes count {{count}}</span>
           <span
+            v-show="currentPage === 1"
             @click="displayAllRecipes()" 
-            class="h5">See all</span>
+            class="h5">See all </span>
           <div>
             <i  
               @click="changeColumnView({itemsPerRow: 12})"
@@ -66,6 +67,7 @@ export default {
   computed: {
     ...mapGetters({
       count: 'recipes/count',
+      currentPage: 'recipes/currentPage'
     }),
   },
   watch: {
@@ -87,3 +89,12 @@ export default {
   }
 }
 </script>
+
+<style>
+.h5 {
+  cursor: pointer;
+}
+.h5:hover {
+  color: blueviolet;
+}
+</style>

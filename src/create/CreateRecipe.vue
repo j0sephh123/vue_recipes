@@ -6,12 +6,21 @@
   </div>
 
   <div class="form-group">
+    <select v-model="category" class="form-control">
+      <option
+        :value="c._id" 
+        v-for="c in categories" 
+        :key="c._id">{{c.name}}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
     <textarea class="form-control" v-model="content" placeholder="content"></textarea>
   </div>
 
 
   <button class="btn btn-primary"
-    @click="createRecipe({name, content})">
+    @click="createRecipe({name, category, content})">
     Submit
   </button>
 
@@ -27,21 +36,22 @@ export default {
   data() {
     return {
       name: '', 
-      content: ''
+      content: '',
+      category: 'italian'
     }
   },
   methods: {
     ...mapActions({
-      createRecipe: 'recipes/createRecipe'
+      createRecipe: 'recipes/createRecipe',
     })
   },
   computed: {
     ...mapGetters({
-      
+      categories: 'recipes/allCategories'
     })
   },
-  mounted(){
-    
+  async mounted() {
+    this.$store.dispatch('recipes/loadAllCategories')
   },
   watch: {
     

@@ -4,6 +4,7 @@ const recipes = {
   namespaced: true,
   state: {    
     allRecipes : [],
+    allCategories: [],
     currentRecipe: {},
     showModal: false,
     currentComment: {},
@@ -22,6 +23,9 @@ const recipes = {
   mutations: {
     loadAllRecipes(state, data) {
       state.allRecipes = data
+    },
+    loadAllCategories(state, data) {
+      state.allCategories = data;
     },
     loadMoreRecipes(state, data) {
       state.allRecipes = state.allRecipes.concat(data);
@@ -51,10 +55,9 @@ const recipes = {
     }
   },
   actions: {
-    async createRecipe({rootGetters}, data) {
+    async createRecipe({rootGetters}, {name, category, content}) {
       const recipeData = {
-        name: data.name,
-        content: data.content,
+        name, category, content,
         profile: rootGetters.currentUser.profile._id,
       }
 
@@ -62,6 +65,13 @@ const recipes = {
       const result = await ApiService.post('recipe', recipeData)
       console.log(result);
 
+    },
+    async loadAllCategories({commit}) {
+      ApiService.setHeader();
+      const allCategories = await ApiService.get('category');
+      if(allCategories.status === 200) {
+        commit('loadAllCategories', allCategories.data)
+      }
     },
     async loadAllRecipes({commit, state}) {
       if(!state.displayAllRecipes) { // false
@@ -86,7 +96,7 @@ const recipes = {
         commit('loadMoreRecipes', loadMoreRecipes.data)
       }
     },
-    async changePage({commit, state, dispatch}, page) {
+    async changePage({commit, dispatch}, page) {
       // start is page - 1
       commit('changePage', page);
       // limit is constant.
@@ -180,6 +190,7 @@ const recipes = {
   },
   getters: {
     allRecipes: state => state.allRecipes,
+    allCategories: state => state.allCategories,
     currentRecipe: state => state.currentRecipe,
     toggler: state => state.showModal,
     currentComment: state => state.currentComment,
@@ -188,6 +199,7 @@ const recipes = {
     limit: state => state.filter.limit,
     itemsPerRow: state => state.itemsPerRow,
     displayAllRecipes: state => state.displayAllRecipes,
+    currentPage: state => state.filter.start + 1,
   }
 }
 
