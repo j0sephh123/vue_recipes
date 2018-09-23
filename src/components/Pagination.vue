@@ -1,9 +1,16 @@
 <template>
   <div>
     <b-pagination
+      v-show="!displayAllRecipes"
       :total-rows="count"
       :per-page="limit"
       v-model="currentPage" />
+    
+    <button 
+      @click="loadMore()"
+      v-show="displayAllRecipes"
+      class="btn btn-primary btn-block"
+    >Load more</button>
   </div>
 </template>
 
@@ -18,6 +25,7 @@ export default {
   },
   methods: {
     ...mapActions({
+      loadMore: 'recipes/loadMore'
     })
   },
   computed: {
@@ -25,6 +33,7 @@ export default {
       pages: 'recipes/pages',
       count: 'recipes/count',
       limit: 'recipes/limit',
+      displayAllRecipes: 'recipes/displayAllRecipes',
     })
   },
   mounted(){

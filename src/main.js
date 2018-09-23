@@ -6,6 +6,7 @@ import BootstrapVue from 'bootstrap-vue'
 import ApiService from '@/common/api'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import '../node_modules/@fortawesome/fontawesome-free/css/all.css'
 
 Vue.use(BootstrapVue);
 

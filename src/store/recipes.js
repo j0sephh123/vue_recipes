@@ -7,15 +7,25 @@ const recipes = {
     currentRecipe: {},
     showModal: false,
     currentComment: {},
-    count: null,
+    count: 0,
     filter: {
       start: 0,
+      limit: 6
+    },
+    itemsPerRow: 4,
+    displayAllRecipes: false,
+    loadMore: {
+      start: 6,
       limit: 6
     }
   },
   mutations: {
     loadAllRecipes(state, data) {
       state.allRecipes = data
+    },
+    loadMoreRecipes(state, data) {
+      state.allRecipes = state.allRecipes.concat(data);
+      state.loadMore.start += 6;
     },
     loadOneRecipe(state, data) {
       state.currentRecipe = data;
@@ -32,6 +42,12 @@ const recipes = {
     },
     changePage(state, {page}) {
       state.filter.start = +page - 1;
+    },
+    itemsPerRow(state, {itemsPerRow}) {
+      state.itemsPerRow = itemsPerRow;
+    },
+    displayAllRecipes(state) {
+      state.displayAllRecipes = !state.displayAllRecipes;
     }
   },
   actions: {
@@ -48,15 +64,26 @@ const recipes = {
 
     },
     async loadAllRecipes({commit, state}) {
-      // console.log('start ', state.filter.start);
-      // console.log('limit ', state.filter.limit);
+      if(!state.displayAllRecipes) { // false
+        ApiService.setHeader()
+        const allRecipes = await ApiService.get(
+          `/recipe?_start=${state.filter.start}&_limit=${state.filter.limit}`
+          )
+          if(allRecipes.status === 200) {
+            commit('loadAllRecipes', allRecipes.data)
+          }
+      }
+    },
+    async loadMore({commit, state}) {
       ApiService.setHeader()
-      const allRecipes = await ApiService.get(
-        `/recipe?_start=${state.filter.start}&_limit=${state.filter.limit}`
+      const loadMoreRecipes = await ApiService.get(
+        `/recipe?_start=${state.loadMore.start}&_limit=${state.loadMore.limit}`
       )
-      console.log(allRecipes);
-      if(allRecipes.status === 200) {
-        commit('loadAllRecipes', allRecipes.data)
+      console.log(loadMoreRecipes.data);
+      console.log(state.loadMore.start, "start");
+      console.log(state.loadMore.limit, "limit");
+      if(loadMoreRecipes.status === 200) {
+        commit('loadMoreRecipes', loadMoreRecipes.data)
       }
     },
     async changePage({commit, state, dispatch}, page) {
@@ -145,7 +172,11 @@ const recipes = {
       if(count.status === 200) {
         commit('setCount', count.data)
       }
-    } 
+    },
+    displayAllRecipes({commit}) {
+      commit('displayAllRecipes')
+    },
+
   },
   getters: {
     allRecipes: state => state.allRecipes,
@@ -155,6 +186,8 @@ const recipes = {
     count: state => state.count,
     pages: state => Math.ceil(state.count/6),
     limit: state => state.filter.limit,
+    itemsPerRow: state => state.itemsPerRow,
+    displayAllRecipes: state => state.displayAllRecipes,
   }
 }
 

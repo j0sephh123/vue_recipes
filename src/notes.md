@@ -66,6 +66,32 @@ Migrating to bootstrap
 [] Pagination. 6 recipes per page.
   - count the number of pages we have. /recipe/count
 
+------------------------------------------------
+Links:
+  https://webkul.github.io/vivid/cheatsheet.html
+
+  https://pixabay.com/en/photos/?q=pizza+drawing&hp=&image_type=all&order=popular&cat=&min_width=&min_height=
+
+  https://www.hellofresh.com/recipes/
+
+Left bar:
+[] Show All </ p >
+[] Order by name </ p >
+[] Order by date published </ p >
+[] Order by rating </ p >
+[] show only from a category -> select </ p >
+[] also be able to hand the left bar. -> then 4 recipes per page. </ p >
+
+Other
+[] Change how many recipes are shown on the page </ p >
+[x] Change how are they shown -> 1 or 3 or 6 on one row </ p >
+[] Show all recipes and when clicking load more -> more are loaded obviously
+
+on top
+[] currently shown recipe like a jumbotron that can be changed </ p >
+
+for each recipe
+[] maybe calories, time to cook </ p >
 
 
 

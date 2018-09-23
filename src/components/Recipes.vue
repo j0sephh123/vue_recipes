@@ -1,8 +1,9 @@
 <template>
 <div class="row">
+  <div v-if="recipe === undefined">hello loading here</div>
 
-  <div v-for="recipe in recipes" :key="recipe._id" 
-    class="col-4 card border-primary mb-3" style="max-width: 20rem;">
+  <div v-else v-for="recipe in recipes" :key="recipe._id" 
+    :class="recipesPerRow(itemsPerRow)">
 
     <div class="card-header">Header</div>
 
@@ -16,7 +17,7 @@
 
     <div class="card-footer">
 
-      <p>Length of ratings for now => {{recipe.ratings.length}}</p>
+      
       <p>Author: 
         <router-link :to="{path: '/profile/' + recipe.profile._id}">{{recipe.profile.name}}</router-link>
       </p>
@@ -27,7 +28,7 @@
         </button>
     </div>
   </div>
-
+  
 </div>
 </template>
 
@@ -41,8 +42,9 @@ export default {
   },
   data() {
     return {
+      recipe: '',
       comment: '',
-      rating: ''
+      rating: '',
     }
   },
   methods: {
@@ -60,6 +62,9 @@ export default {
       } else {
         return false;
       }
+    },
+    recipesPerRow(itemsPerRow) {
+      return `col-${itemsPerRow} card border-primary mb-3"`;
     }
   },
   computed: {
@@ -69,6 +74,7 @@ export default {
       count: 'recipes/count',
       currentUser: 'currentUser',
       profile: 'profile/profile',
+      itemsPerRow: 'recipes/itemsPerRow'
     }),
   },
   async mounted(){

@@ -1,10 +1,4 @@
-    // async createComment({rootGetters}, {comment, recipeId}) {
-    //   const data = {
-    //     text: comment,
-    //     profile: rootGetters.currentUser.profile._id,
-    //     recipe: recipeId
-    //   }
-    //   ApiService.setHeader()
-    //   const createdComment = await ApiService.post('comment', data)
-    //   console.log(createdComment);
-    // },
+Icons 
+list view <i class="fas fa-list-alt"></i>
+grid large view <i class="fas fa-th-large"></i>
+grid view <i class="fas fa-th"></i>
