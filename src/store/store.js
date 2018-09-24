@@ -6,12 +6,13 @@ import ApiService from '../common/api';
 
 import recipes from './recipes'
 import profile from './profile'
+import users from './users'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    recipes, profile
+    recipes, profile, users
   },
   state: {
     isAuthenticated: false,

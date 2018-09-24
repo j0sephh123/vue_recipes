@@ -1,8 +1,7 @@
 <template>
 <div class="row">
-  <div v-if="recipe === undefined">hello loading here</div>
 
-  <div v-else v-for="recipe in recipes" :key="recipe._id" 
+  <div v-for="recipe in recipes" :key="recipe._id" 
     :class="recipesPerRow(itemsPerRow)">
 
     <div class="card-header">Header</div>
@@ -17,7 +16,7 @@
 
     <div class="card-footer">
 
-      
+      <p>Category: {{recipe.category.name}}</p>
       <p>Author: 
         <router-link :to="{path: '/profile/' + recipe.profile._id}">{{recipe.profile.name}}</router-link>
       </p>
@@ -42,7 +41,6 @@ export default {
   },
   data() {
     return {
-      recipe: '',
       comment: '',
       rating: '',
     }
@@ -78,6 +76,7 @@ export default {
     }),
   },
   async mounted(){
+    console.log(this.$store.state.recipes.allRecipes)
     await this.$store.dispatch('profile/loadProfile', this.$store.getters.currentUser.profile._id),
     await this.$store.dispatch('recipes/loadAllRecipes')
   }

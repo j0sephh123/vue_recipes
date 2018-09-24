@@ -18,6 +18,10 @@ const recipes = {
     loadMore: {
       start: 6,
       limit: 6
+    },
+    filterRecipes: {
+      by: null,
+      value: null
     }
   },
   mutations: {
@@ -52,6 +56,10 @@ const recipes = {
     },
     displayAllRecipes(state) {
       state.displayAllRecipes = !state.displayAllRecipes;
+    },
+    filterRecipes(state, {by, value}) {
+      state.filterRecipes.by = by;
+      state.filterRecipes.value = value;
     }
   },
   actions: {
@@ -66,6 +74,9 @@ const recipes = {
       console.log(result);
 
     },
+    filterRecipes({commit}, {by, value}) {
+      commit('filterRecipes', {by, value});
+    }, // todo
     async loadAllCategories({commit}) {
       ApiService.setHeader();
       const allCategories = await ApiService.get('category');
@@ -155,7 +166,6 @@ const recipes = {
       console.log(deletedComment);
     }, 
     async editComment({commit, rootGetters, state}, {text}) {
-      console.log(state.currentComment._id);
       ApiService.setHeader()
       const updatedResult = await ApiService.put(
         'comment/' + state.currentComment._id, {text}
@@ -189,7 +199,9 @@ const recipes = {
 
   },
   getters: {
-    allRecipes: state => state.allRecipes,
+    allRecipes: state => {
+      return state.allRecipes;
+    },
     allCategories: state => state.allCategories,
     currentRecipe: state => state.currentRecipe,
     toggler: state => state.showModal,

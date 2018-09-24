@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    Timeline here maybe...
+    List of all the users
   </div>
 </template>
 
