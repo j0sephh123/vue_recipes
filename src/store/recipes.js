@@ -22,7 +22,7 @@ const recipes = {
     filterRecipes: {
       by: null,
       value: null
-    }
+    } // todo
   },
   mutations: {
     loadAllRecipes(state, data) {
@@ -100,9 +100,6 @@ const recipes = {
       const loadMoreRecipes = await ApiService.get(
         `/recipe?_start=${state.loadMore.start}&_limit=${state.loadMore.limit}`
       )
-      console.log(loadMoreRecipes.data);
-      console.log(state.loadMore.start, "start");
-      console.log(state.loadMore.limit, "limit");
       if(loadMoreRecipes.status === 200) {
         commit('loadMoreRecipes', loadMoreRecipes.data)
       }
@@ -149,7 +146,7 @@ const recipes = {
         commit('loadOneRecipe', foundRecipe.data)
       }
     },
-    async submitComment({commit, state, rootGetters}, {text}) {
+    async submitComment({state, rootGetters}, {text}) {
       console.log('submit comment here');
       const data = {
         text,
@@ -160,12 +157,12 @@ const recipes = {
       const submittedComment = await ApiService.post('comment', data)
       console.log(submittedComment);
     },
-    async deleteComment({commit, rootGetters, state}, {commentId}) {
+    async deleteComment({}, {commentId}) {
       ApiService.setHeader()
       const deletedComment = await ApiService.delete('comment/' + commentId)
       console.log(deletedComment);
     }, 
-    async editComment({commit, rootGetters, state}, {text}) {
+    async editComment({state}, {text}) {
       ApiService.setHeader()
       const updatedResult = await ApiService.put(
         'comment/' + state.currentComment._id, {text}
@@ -178,7 +175,7 @@ const recipes = {
 
 
     }, // todo
-    async openEditModal({commit, rootGetters, state}, {comment}) {
+    async openEditModal({commit}, {comment}) {
       // set current comment
       commit('setCurrentComment', {comment, bool: true})
       // update...
